@@ -87,3 +87,14 @@ This is the place for you to write reflections:
 3. Ya, saya sudah mengeskplorasi tools pada Postman. Aplikasi Postman membantu saya untuk mengetes API secara langsung tanpa harus membuat UI sehingga bisa mengecek endpointnya secara langsung, melihat response yang dikirim dari server, memastikan data yang dikirim ke server sudah sesuai, dan untuk memvalidasi fitur yang ada pada program. Fitur Postman yang berguna bagi saya adalah fitur Request Body (JSON) karena fitur ini memudahkan untuk mengirim data ke server, fitur Response Viewer karena dapat menampilkan response dalam format JSON yang rapih sehingga mudah dianalisis dan dibaca, dan fitur Collection karena dapat mengelompokkan request API berdasarkan modul sehingga memudahkan testing secara berulang
 
 #### Reflection Publisher-3
+1. Pada aplikasi Bambang Shop ini, menggunakan Push Model dari Observer pattern. Hal ini dikarenakan, Publisher langsung mengirimkan data lengkap dalam bentuk payload ke Subscriber dan Subscriber tidak perlu meminta data tambahan
+2. Berikut ini adalah keuntungan apabila menggunkan Pull Model, yaitu:
+- Subscriber dapat mengambil data sesuai kebutuhan, tidak terbatas pada data yang dikirim oleh publisher (lebih fleksibel)
+- Publisher hanya mengirimkan notifikasi sederhana, sehingga dapat mengurangi beban publisher
+- Hemat Bandwith karena data tidak langsung dikirim secara lengkap,  melainkan hanya ketika dibutuhkan oleh subscriber
+Berikut ini adalah kekurangan dari Pull Model, yaitu:
+- Subscriber harus melakukan request tambahan untuk mengambil data dari publisher (lebih kompleks)
+- Proses menjadi lama karena menerima notifikasi lalu melakukan request lagi untuk mengambil data
+- Tidak efisien untuk kasus sederhana karena dapat menambahkan step yang tidak diperlukan
+- Subscriber harus mengetahui cara mengakses data dari publihser
+3. Jika program tidak menggunakan multi-threading pada proses notifikasi, maka program hanya bisa mengirim satu notifikasi pada satu subscriber saja dalam satu waktu (sekuensial) sehingga performa menjadi lebih lambat apalagi jika jumlah subscriber banyak. Selain itu, dapat menurunkan scalability program dan menyebabkan blocking pada request utama karena server harus menunggu semua notifikasi selesai dikirim. Oleh karena itu, penggunaan multi-threading sangat penting untuk meningkatkan efisiensi dan responsivitas program dalam menangani banyak subscriber.
