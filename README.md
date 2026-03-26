@@ -91,7 +91,7 @@ This is the place for you to write reflections:
 2. Berikut ini adalah keuntungan apabila menggunkan Pull Model, yaitu:
 - Subscriber dapat mengambil data sesuai kebutuhan, tidak terbatas pada data yang dikirim oleh publisher (lebih fleksibel)
 - Publisher hanya mengirimkan notifikasi sederhana, sehingga dapat mengurangi beban publisher
-- Hemat Bandwith karena data tidak langsung dikirim secara lengkap,  melainkan hanya ketika dibutuhkan oleh subscriber
+- Hemat Bandwith karena data tidak langsung dikirim secara lengkap,  melainkan hanya ketika dibutuhkan oleh subscriber<br><br>
 Berikut ini adalah kekurangan dari Pull Model, yaitu:
 - Subscriber harus melakukan request tambahan untuk mengambil data dari publisher (lebih kompleks)
 - Proses menjadi lama karena menerima notifikasi lalu melakukan request lagi untuk mengambil data
