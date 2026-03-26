@@ -77,6 +77,9 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
+1. Menurut saya, dalam kasus BambangShop ini, penggunaan interface (trait di Rust) untuk Subscriber tidak wajib karena saat ini subscriber memiliki perilaku yang sama, yaitu menerima notifikasi melalui URL. Oleh karena itu, penggunaan satu struct Subscriber saja sudah cukup untuk merepresentasikan data dan kebutuhan sistem. Penggunaan interface (trait) diperlukan apabila terdapat beberapa jenis subcriber yang memiliki cara notifikasi yang berbeda, seperti mengirim notifikasi lewat email, SMS, atau yang lainnya.
+2. Penggunaan Vec tidak cukup pada kasus ini, karena tidak menjamin keunikkan, tidak efisien untuk data besar, dan membutuhkan waktu yang lama untuk mengecek keunikkan dan mencari data. Karena URL harus bersifat unik, maka penggunaan DashMap lebih dianjurkan karena pada DashMap keunikkan bersifat otomatis di mana url akan menjadi key sehingga tidak dapat diduplikat dan operasi pencariannya lebih cepat dibandingkan dengan Vec.
+3. Pada kasus ini, DashMap dan Singleton memiliki peran yang berbeda, sehingga tidak bisa saling menggantikan dan tetap membutuhkan DashMap. Hal ini dikarenakan, Singleton Pattern berperan untuk memastikan bahwa hanya ada satu instance dari suatu data, seperti pada kode bagian lazy_static!{}, kode tersebut sudah menerapkan singleton karena SUBSCRIBER hanya dibuat satu kali dan bisa diakses secara global. Sedangkan DashMap berperan untuk menjamin thread-safety sehingga aplikasi aman diakses oleh banyak thread, karena aplikasi ini bersifat concurrent/multi-threaded. Jika tidak menggunakan DashMap, maka bisa terjadi race condition atau data bisa corrupt.
 
 #### Reflection Publisher-2
 
