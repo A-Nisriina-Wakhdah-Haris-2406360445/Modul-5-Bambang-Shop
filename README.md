@@ -76,17 +76,25 @@ This is the place for you to write reflections:
 
 ### Mandatory (Publisher) Reflections
 
-#### Reflection Publisher-1
+<details>
+<Summary><b>Reflection Publisher-1</b></Summary>
+
 1. Menurut saya, dalam kasus BambangShop ini, penggunaan interface (trait di Rust) untuk Subscriber tidak wajib karena saat ini subscriber memiliki perilaku yang sama, yaitu menerima notifikasi melalui URL. Oleh karena itu, penggunaan satu struct Subscriber saja sudah cukup untuk merepresentasikan data dan kebutuhan sistem. Penggunaan interface (trait) diperlukan apabila terdapat beberapa jenis subcriber yang memiliki cara notifikasi yang berbeda, seperti mengirim notifikasi lewat email, SMS, atau yang lainnya.
 2. Penggunaan Vec tidak cukup pada kasus ini, karena tidak menjamin keunikkan, tidak efisien untuk data besar, dan membutuhkan waktu yang lama untuk mengecek keunikkan dan mencari data. Karena URL harus bersifat unik, maka penggunaan DashMap lebih dianjurkan karena pada DashMap keunikkan bersifat otomatis di mana url akan menjadi key sehingga tidak dapat diduplikat dan operasi pencariannya lebih cepat dibandingkan dengan Vec.
 3. Pada kasus ini, DashMap dan Singleton memiliki peran yang berbeda, sehingga tidak bisa saling menggantikan dan tetap membutuhkan DashMap. Hal ini dikarenakan, Singleton Pattern berperan untuk memastikan bahwa hanya ada satu instance dari suatu data, seperti pada kode bagian lazy_static!{}, kode tersebut sudah menerapkan singleton karena SUBSCRIBER hanya dibuat satu kali dan bisa diakses secara global. Sedangkan DashMap berperan untuk menjamin thread-safety sehingga aplikasi aman diakses oleh banyak thread, karena aplikasi ini bersifat concurrent/multi-threaded. Jika tidak menggunakan DashMap, maka bisa terjadi race condition atau data bisa corrupt.
+</details>
 
-#### Reflection Publisher-2
+<details>
+<Summary><b>Reflection Publisher-2</b></Summary>
+
 1. Berdasarkan pemahaman saya, "Service" dan "Repository" perlu dipisah karena keduanya memiliki tanggung jawab yang berbeda. "Repository" bertugas untuk menangani akses data ke database, sedangkan "Service" bertugas menangani logika bisnis. Pemisahan tersebut dilakukan agar sesuai dengan prinsip Single Responsibility Principle (SRP), yang menyatakan bahwa setiap komponen sebaiknya memiliki satu tanggung jawab, serta prinsip Separation of Concerns, sehingga "Repository" bisa fokus ke data access dan "Service" fokus ke bussiness logic. Selain itu, pemisahan ini bertujuan untuk meningkatkan maintainability, Reusability kode, dan kemudahan untuk testing. Jika keduanya digabung dalam Model, maka Model akan menjadi terlalu kompleks dan sulit untuk dirawat.
 2. Apabila hanya menggunakan Model tanpa memisahkannya menjadi Service dan Repository, maka setiap model yang ada akan menangani terlalu banyak tanggung jawab, seperti menyimpan data, mengakses database, menjalankan logika bisnis, dan lain-lain sehingga menyebabkan kode yang ada menjadi sangat kompleks dan saling bergantung satu sama lain  (tightly-coupled). Selain itu, dapat menyebabkan kode sulit untuk dipahami, diperbaiki, dikembangkan, dan diuji. Oleh karena itu, kita perlu melakukan pemisahan tanggung jawab untuk menjaga struktur kode agar lebih terogranisir dan bersih.
 3. Ya, saya sudah mengeskplorasi tools pada Postman. Aplikasi Postman membantu saya untuk mengetes API secara langsung tanpa harus membuat UI sehingga bisa mengecek endpointnya secara langsung, melihat response yang dikirim dari server, memastikan data yang dikirim ke server sudah sesuai, dan untuk memvalidasi fitur yang ada pada program. Fitur Postman yang berguna bagi saya adalah fitur Request Body (JSON) karena fitur ini memudahkan untuk mengirim data ke server, fitur Response Viewer karena dapat menampilkan response dalam format JSON yang rapih sehingga mudah dianalisis dan dibaca, dan fitur Collection karena dapat mengelompokkan request API berdasarkan modul sehingga memudahkan testing secara berulang
+</details>
 
-#### Reflection Publisher-3
+<details>
+<Summary><b>Reflection Publisher-3</b></Summary>
+
 1. Pada aplikasi Bambang Shop ini, menggunakan Push Model dari Observer pattern. Hal ini dikarenakan, Publisher langsung mengirimkan data lengkap dalam bentuk payload ke Subscriber dan Subscriber tidak perlu meminta data tambahan
 2. Berikut ini adalah keuntungan apabila menggunkan Pull Model, yaitu:
 - Subscriber dapat mengambil data sesuai kebutuhan, tidak terbatas pada data yang dikirim oleh publisher (lebih fleksibel)
@@ -98,3 +106,4 @@ Berikut ini adalah kekurangan dari Pull Model, yaitu:
 - Tidak efisien untuk kasus sederhana karena dapat menambahkan step yang tidak diperlukan
 - Subscriber harus mengetahui cara mengakses data dari publihser
 3. Jika program tidak menggunakan multi-threading pada proses notifikasi, maka program hanya bisa mengirim satu notifikasi pada satu subscriber saja dalam satu waktu (sekuensial) sehingga performa menjadi lebih lambat apalagi jika jumlah subscriber banyak. Selain itu, dapat menurunkan scalability program dan menyebabkan blocking pada request utama karena server harus menunggu semua notifikasi selesai dikirim. Oleh karena itu, penggunaan multi-threading sangat penting untuk meningkatkan efisiensi dan responsivitas program dalam menangani banyak subscriber.
+</details>
